@@ -1,0 +1,104 @@
+{
+  "year_people": 2025,
+  "people": {
+    "Canada": {
+      "AllMobile": 99.74,
+      "LTE": 99.63,
+      "population": 36991981
+    },
+    "Québec": {
+      "AllMobile": 99.7,
+      "LTE": 99.61,
+      "population": 8501833
+    },
+    "Nunavik, 14 northern villages": {
+      "AllMobile": 27.29,
+      "LTE": 5.64,
+      "population": 14045
+    },
+    "by_village": {
+      "Akulivik": {
+        "AllMobile": 0.0,
+        "LTE": 0.0,
+        "population": 642
+      },
+      "Aupaluk": {
+        "AllMobile": 0.0,
+        "LTE": 0.0,
+        "population": 233
+      },
+      "Inukjuak": {
+        "AllMobile": 0.0,
+        "LTE": 0.0,
+        "population": 1821
+      },
+      "Ivujivik": {
+        "AllMobile": 0.0,
+        "LTE": 0.0,
+        "population": 412
+      },
+      "Kangiqsualujjuaq": {
+        "AllMobile": 0.0,
+        "LTE": 0.0,
+        "population": 956
+      },
+      "Kangiqsujuaq": {
+        "AllMobile": 0.0,
+        "LTE": 0.0,
+        "population": 837
+      },
+      "Kangirsuk": {
+        "AllMobile": 0.0,
+        "LTE": 0.0,
+        "population": 561
+      },
+      "Kuujjuaq": {
+        "AllMobile": 97.93,
+        "LTE": 0.0,
+        "population": 2668
+      },
+      "Kuujjuarapik": {
+        "AllMobile": 100.0,
+        "LTE": 100.0,
+        "population": 792
+      },
+      "Puvirnituq": {
+        "AllMobile": 0.0,
+        "LTE": 0.0,
+        "population": 2129
+      },
+      "Quaqtaq": {
+        "AllMobile": 94.61,
+        "LTE": 0.0,
+        "population": 453
+      },
+      "Salluit": {
+        "AllMobile": 0.0,
+        "LTE": 0.0,
+        "population": 1580
+      },
+      "Tasiujaq": {
+        "AllMobile": 0.0,
+        "LTE": 0.0,
+        "population": 420
+      },
+      "Umiujaq": {
+        "AllMobile": 0.0,
+        "LTE": 0.0,
+        "population": 541
+      }
+    }
+  },
+  "land_2024": {
+    "Québec": {
+      "area_km2": 1696633,
+      "LTE_share_pct": 19.14,
+      "5G_share_pct": 9.41
+    },
+    "Nunavik (health region 17)": {
+      "area_km2": 513049,
+      "LTE_share_pct": 0.19,
+      "5G_share_pct": 0.0
+    }
+  }
+}

@@ -1,0 +1,267 @@
+{
+  "sites": [
+    {
+      "n": 1,
+      "name": "CENTRE MULTISERVICES DE SANTÉ ET DE SERVICES SOCIAUX CHRIST-ROI",
+      "address": "900, boulevard Wilfrid-Hamel",
+      "municipality": "Québec",
+      "clsc": "Limoilou-Vanier"
+    },
+    {
+      "n": 2,
+      "name": "CLSC DE SAINTE-FOY",
+      "address": "3108, chemin Sainte-Foy",
+      "municipality": "Québec",
+      "clsc": "Sainte-Foy - Sillery"
+    },
+    {
+      "n": 3,
+      "name": "CLSC DE L'ANCIENNE-LORETTE",
+      "address": "1320, rue Saint-Paul",
+      "municipality": "L'Ancienne-Lorette",
+      "clsc": "Laurentien"
+    },
+    {
+      "n": 4,
+      "name": "CLSC ET CENTRE DE SERVICES AMBULATOIRES DE LA HAUTE-VILLE",
+      "address": "55, chemin Sainte-Foy",
+      "municipality": "Québec",
+      "clsc": "Québec - Haute-Ville"
+    },
+    {
+      "n": 5,
+      "name": "CENTRE MULTISERVICES DE SANTÉ ET DE SERVICES SOCIAUX CHAUVEAU",
+      "address": "11999, rue de l'Hôpital",
+      "municipality": "Québec",
+      "clsc": "Loretteville - Val-Bélair"
+    },
+    {
+      "n": 6,
+      "name": "CLSC DE MONTCALM",
+      "address": "383, chemin Sainte-Foy",
+      "municipality": "Québec",
+      "clsc": "Québec - Haute-Ville"
+    },
+    {
+      "n": 7,
+      "name": "CLSC D'ORSAINVILLE",
+      "address": "791, rue de Sherwood",
+      "municipality": "Québec",
+      "clsc": "Charlesbourg"
+    },
+    {
+      "n": 8,
+      "name": "CLSC MONTMORENCY",
+      "address": "33, avenue Ruel",
+      "municipality": "Québec",
+      "clsc": "Beauport"
+    },
+    {
+      "n": 9,
+      "name": "CLSC DE SAINTE-CATHERINE-DE-LA-JACQUES-CARTIER",
+      "address": "4500, route de Fossambault, suite 200",
+      "municipality": "Sainte-Catherine-de-la-Jacques-Cartier",
+      "clsc": "Loretteville - Val-Bélair"
+    },
+    {
+      "n": 10,
+      "name": "CLSC DE LIMOILOU",
+      "address": "1405, chemin de la Canardière",
+      "municipality": "Québec",
+      "clsc": "Limoilou-Vanier"
+    },
+    {
+      "n": 11,
+      "name": "CENTRE DE PROTECTION DE L'ENFANCE ET DE LA JEUNESSE ET CLSC DE QUÉBEC",
+      "address": "1020, route de l'Église, 7e étage",
+      "municipality": "Québec",
+      "clsc": "Sainte-Foy - Sillery"
+    },
+    {
+      "n": 12,
+      "name": "CLSC DE SAINTE-BRIGITTE-DE-LAVAL",
+      "address": "20, rue du Domaine",
+      "municipality": "Sainte-Brigitte-de-Laval",
+      "clsc": "Beauport"
+    },
+    {
+      "n": 13,
+      "name": "CLSC ET CENTRE DE RÉADAPTATION EN DÉFICIENCE INTELLECTUELLE ET EN TROUBLES DU SPECTRE DE L'AUTISME DU PAVILLON ARTHUR-VALLÉE",
+      "address": "2400, avenue d'Estimauville",
+      "municipality": "Québec",
+      "clsc": "Beauport"
+    },
+    {
+      "n": 14,
+      "name": "CENTRE MULTISERVICES DE SANTÉ ET DE SERVICES SOCIAUX SACRÉ-COEUR",
+      "address": "1, avenue du Sacré-Coeur",
+      "municipality": "Québec",
+      "clsc": "Québec - Basse-Ville"
+    },
+    {
+      "n": 15,
+      "name": "CLSC ET CENTRE DE RÉADAPTATION EN DÉPENDANCE DE LA BASSE-VILLE",
+      "address": "50, rue Saint-Joseph Est",
+      "municipality": "Québec",
+      "clsc": "Québec - Basse-Ville"
+    },
+    {
+      "n": 16,
+      "name": "CLSC DE MAIZERETS",
+      "address": "2480, chemin de la Canardière",
+      "municipality": "Québec",
+      "clsc": "Limoilou-Vanier"
+    },
+    {
+      "n": 17,
+      "name": "CLSC DE BEAUPORT",
+      "address": "3666, chemin Royal",
+      "municipality": "Québec",
+      "clsc": "Beauport"
+    },
+    {
+      "n": 18,
+      "name": "CLSC DE CHARLESBOURG",
+      "address": "190, 76e Rue Est",
+      "municipality": "Québec",
+      "clsc": "Charlesbourg"
+    }
+  ],
+  "excluded_same_mission_code": [
+    "AIRE OUVERTE DE LORETTEVILLE",
+    "AIRE OUVERTE DE PORTNEUF",
+    "AIRE OUVERTE DE QUÉBEC",
+    "CENTRE DE PROTECTION DE L'ENFANCE ET DE LA JEUNESSE MONT-D'YOUVILLE",
+    "MAISON DE NAISSANCE DE LA CAPITALE-NATIONALE"
+  ],
+  "official_territories": [
+    "Beauport",
+    "Charlesbourg",
+    "Duberger-Les Saules-Lebourgneuf",
+    "Laurentien",
+    "Limoilou-Vanier",
+    "Loretteville - Val-Bélair",
+    "Québec - Basse-Ville",
+    "Québec - Haute-Ville",
+    "Sainte-Foy - Sillery"
+  ],
+  "buildings": 250571,
+  "nearest_site_in_own_territory_pct": 78.2,
+  "median_m": 2497,
+  "p90_m": 4542,
+  "territories": {
+    "Beauport": {
+      "buildings": 45131,
+      "sites_of_territory": 4,
+      "nearest_site_in_own_territory_pct": 97.8,
+      "median_m": 2715,
+      "p90_m": 5153,
+      "nearest_site_territory": {
+        "Beauport": 44138,
+        "Charlesbourg": 592,
+        "Limoilou-Vanier": 401
+      }
+    },
+    "Charlesbourg": {
+      "buildings": 53340,
+      "sites_of_territory": 2,
+      "nearest_site_in_own_territory_pct": 91.5,
+      "median_m": 2350,
+      "p90_m": 3937,
+      "nearest_site_territory": {
+        "Charlesbourg": 48818,
+        "Loretteville - Val-Bélair": 2386,
+        "Beauport": 2023,
+        "Limoilou-Vanier": 113
+      }
+    },
+    "Duberger-Les Saules-Lebourgneuf": {
+      "buildings": 22990,
+      "sites_of_territory": 0,
+      "nearest_site_in_own_territory_pct": 0.0,
+      "median_m": 3142,
+      "p90_m": 3995,
+      "nearest_site_territory": {
+        "Laurentien": 6954,
+        "Limoilou-Vanier": 5815,
+        "Charlesbourg": 5397,
+        "Loretteville - Val-Bélair": 3416,
+        "Sainte-Foy - Sillery": 1408
+      }
+    },
+    "Laurentien": {
+      "buildings": 19183,
+      "sites_of_territory": 1,
+      "nearest_site_in_own_territory_pct": 56.3,
+      "median_m": 3733,
+      "p90_m": 5404,
+      "nearest_site_territory": {
+        "Laurentien": 10804,
+        "Sainte-Foy - Sillery": 8261,
+        "Loretteville - Val-Bélair": 118
+      }
+    },
+    "Limoilou-Vanier": {
+      "buildings": 14702,
+      "sites_of_territory": 3,
+      "nearest_site_in_own_territory_pct": 82.4,
+      "median_m": 1161,
+      "p90_m": 1873,
+      "nearest_site_territory": {
+        "Limoilou-Vanier": 12109,
+        "Québec - Basse-Ville": 2066,
+        "Beauport": 518,
+        "Charlesbourg": 9
+      }
+    },
+    "Loretteville - Val-Bélair": {
+      "buildings": 54724,
+      "sites_of_territory": 2,
+      "nearest_site_in_own_territory_pct": 88.8,
+      "median_m": 3016,
+      "p90_m": 5238,
+      "nearest_site_territory": {
+        "Loretteville - Val-Bélair": 48573,
+        "Charlesbourg": 5921,
+        "Laurentien": 230
+      }
+    },
+    "Québec - Basse-Ville": {
+      "buildings": 6879,
+      "sites_of_territory": 2,
+      "nearest_site_in_own_territory_pct": 66.0,
+      "median_m": 535,
+      "p90_m": 1129,
+      "nearest_site_territory": {
+        "Québec - Basse-Ville": 4542,
+        "Québec - Haute-Ville": 1553,
+        "Limoilou-Vanier": 784
+      }
+    },
+    "Québec - Haute-Ville": {
+      "buildings": 6339,
+      "sites_of_territory": 2,
+      "nearest_site_in_own_territory_pct": 74.4,
+      "median_m": 790,
+      "p90_m": 1986,
+      "nearest_site_territory": {
+        "Québec - Haute-Ville": 4715,
+        "Québec - Basse-Ville": 929,
+        "Limoilou-Vanier": 695
+      }
+    },
+    "Sainte-Foy - Sillery": {
+      "buildings": 27283,
+      "sites_of_territory": 2,
+      "nearest_site_in_own_territory_pct": 81.3,
+      "median_m": 1815,
+      "p90_m": 2988,
+      "nearest_site_territory": {
+        "Sainte-Foy - Sillery": 22178,
+        "Québec - Haute-Ville": 2710,
+        "Laurentien": 1405,
+        "Limoilou-Vanier": 990
+      }
+    }
+  }
+}

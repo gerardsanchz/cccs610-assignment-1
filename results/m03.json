@@ -1,0 +1,136 @@
+{
+  "seed": 610,
+  "size": 600,
+  "permitted": 100,
+  "margin": 0.05,
+  "sweeps": {
+    "fixed 0.1": [
+      {
+        "threshold": 0.3,
+        "radii": [
+          0.1
+        ],
+        "replicas": 5,
+        "counts": [
+          24,
+          23,
+          25,
+          27,
+          27
+        ],
+        "min": 23,
+        "mean": 25.2,
+        "max": 27,
+        "mean_coverage_pct": 70.68,
+        "complete_runs": 0,
+        "capped_runs": 0,
+        "mean_radius_used": 0.1
+      },
+      {
+        "threshold": 0.5,
+        "radii": [
+          0.1
+        ],
+        "replicas": 5,
+        "counts": [
+          33,
+          34,
+          37,
+          31,
+          32
+        ],
+        "min": 31,
+        "mean": 33.4,
+        "max": 37,
+        "mean_coverage_pct": 81.26,
+        "complete_runs": 0,
+        "capped_runs": 0,
+        "mean_radius_used": 0.1
+      },
+      {
+        "threshold": 0.7,
+        "radii": [
+          0.1
+        ],
+        "replicas": 5,
+        "counts": [
+          45,
+          41,
+          47,
+          45,
+          43
+        ],
+        "min": 41,
+        "mean": 44.2,
+        "max": 47,
+        "mean_coverage_pct": 89.42,
+        "complete_runs": 0,
+        "capped_runs": 0,
+        "mean_radius_used": 0.1
+      },
+      {
+        "threshold": 0.8,
+        "radii": [
+          0.1
+        ],
+        "replicas": 5,
+        "counts": [
+          58,
+          60,
+          62,
+          58,
+          56
+        ],
+        "min": 56,
+        "mean": 58.8,
+        "max": 62,
+        "mean_coverage_pct": 94.42,
+        "complete_runs": 0,
+        "capped_runs": 0,
+        "mean_radius_used": 0.1
+      },
+      {
+        "threshold": 0.9,
+        "radii": [
+          0.1
+        ],
+        "replicas": 5,
+        "counts": [
+          72,
+          73,
+          69,
+          67,
+          75
+        ],
+        "min": 67,
+        "mean": 71.2,
+        "max": 75,
+        "mean_coverage_pct": 96.72,
+        "complete_runs": 0,
+        "capped_runs": 0,
+        "mean_radius_used": 0.1
+      },
+      {
+        "threshold": 0.95,
+        "radii": [
+          0.1
+        ],
+        "replicas": 5,
+        "counts": [
+          86,
+          90,
+          92,
+          88,
+          99
+        ],
+        "min": 86,
+        "mean": 91,
+        "max": 99,
+        "mean_coverage_pct": 98.81,
+        "complete_runs": 0,
+        "capped_runs": 0,
+        "mean_radius_used": 0.1
+      }
+    ]
+  }
+}

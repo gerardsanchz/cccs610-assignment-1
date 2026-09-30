@@ -1,0 +1,23 @@
+{
+  "scheduled_airports": 14,
+  "large_or_medium": 3,
+  "kept": [
+    "Kuujjuaq",
+    "Kuujjuarapik",
+    "Puvirnituq"
+  ],
+  "left_out": [
+    "Akulivik",
+    "Aupaluk",
+    "Inukjuak",
+    "Ivujivik",
+    "Kangiqsualujjuaq",
+    "Kangiqsujuaq",
+    "Kangirsuk",
+    "Quaqtaq",
+    "Salluit",
+    "Tasiujaq",
+    "Umiujaq"
+  ],
+  "worldwide_large_or_medium_scheduled": 3269
+}

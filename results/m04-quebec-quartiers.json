@@ -1,0 +1,10 @@
+{
+  "quartiers": 35,
+  "shared_borders": 87,
+  "largest_group_all_touching": 3,
+  "colours": {
+    "class method": 5,
+    "DSatur": 4
+  },
+  "true_minimum": 4
+}

@@ -1,0 +1,212 @@
+{
+  "hotspots": 266,
+  "by_borough": {
+    "La Cité-Limoilou": 157,
+    "Sainte-Foy–Sillery–Cap-Rouge": 42,
+    "Beauport": 21,
+    "Les Rivières": 18,
+    "Charlesbourg": 18,
+    "La Haute-Saint-Charles": 10
+  },
+  "by_quartier": {
+    "Val-Bélair": {
+      "hotspots": 3,
+      "buildings": 19839
+    },
+    "Neufchatel Est—Lebourgneuf": {
+      "hotspots": 3,
+      "buildings": 16509
+    },
+    "Duberger—Les Saules": {
+      "hotspots": 9,
+      "buildings": 13181
+    },
+    "Sainte-Thérèse-de-Lisieux": {
+      "hotspots": 4,
+      "buildings": 12881
+    },
+    "Cap-Rouge": {
+      "hotspots": 3,
+      "buildings": 11646
+    },
+    "Quartier 5-2": {
+      "hotspots": 1,
+      "buildings": 11540
+    },
+    "Notre-Dame-des-Laurentides": {
+      "hotspots": 4,
+      "buildings": 11525
+    },
+    "L'Aéroport": {
+      "hotspots": 4,
+      "buildings": 10564
+    },
+    "Saint-Émile": {
+      "hotspots": 1,
+      "buildings": 10405
+    },
+    "Orsainville": {
+      "hotspots": 2,
+      "buildings": 9824
+    },
+    "Loretteville": {
+      "hotspots": 4,
+      "buildings": 9185
+    },
+    "Des Châtels": {
+      "hotspots": 2,
+      "buildings": 8610
+    },
+    "Lac-Saint-Charles": {
+      "hotspots": 1,
+      "buildings": 8257
+    },
+    "Vieux-Bourg": {
+      "hotspots": 3,
+      "buildings": 8075
+    },
+    "Chutes-Montmorency": {
+      "hotspots": 4,
+      "buildings": 7869
+    },
+    "Jésuites": {
+      "hotspots": 3,
+      "buildings": 7803
+    },
+    "Quartier 4-3": {
+      "hotspots": 2,
+      "buildings": 7529
+    },
+    "Sillery": {
+      "hotspots": 10,
+      "buildings": 6681
+    },
+    "Saint-Louis": {
+      "hotspots": 14,
+      "buildings": 5667
+    },
+    "Quartier 4-5": {
+      "hotspots": 5,
+      "buildings": 5640
+    },
+    "Saint-Sauveur": {
+      "hotspots": 5,
+      "buildings": 4926
+    },
+    "Vieux-Moulin": {
+      "hotspots": 9,
+      "buildings": 4828
+    },
+    "Plateau": {
+      "hotspots": 1,
+      "buildings": 4560
+    },
+    "Lairet": {
+      "hotspots": 5,
+      "buildings": 4175
+    },
+    "Cité-Universitaire": {
+      "hotspots": 8,
+      "buildings": 3701
+    },
+    "Maizerets": {
+      "hotspots": 4,
+      "buildings": 3666
+    },
+    "Vanier": {
+      "hotspots": 5,
+      "buildings": 3619
+    },
+    "Pointe-de-Sainte-Foy": {
+      "hotspots": 2,
+      "buildings": 3515
+    },
+    "Vieux-Limoilou": {
+      "hotspots": 13,
+      "buildings": 3242
+    },
+    "Quartier 4-6": {
+      "hotspots": 2,
+      "buildings": 2749
+    },
+    "Montcalm": {
+      "hotspots": 22,
+      "buildings": 1981
+    },
+    "Saint-Sacrement": {
+      "hotspots": 15,
+      "buildings": 1870
+    },
+    "Vieux-Québec—Cap-Blanc—Colline parlementaire": {
+      "hotspots": 62,
+      "buildings": 1804
+    },
+    "Saint-Jean-Baptiste": {
+      "hotspots": 18,
+      "buildings": 1397
+    },
+    "Saint-Roch": {
+      "hotspots": 13,
+      "buildings": 1309
+    }
+  },
+  "top3_quartier_share_pct": 38.3,
+  "buildings_by_type": {
+    "Résidence": 130287,
+    "Garage - Annexe - Remise": 111361,
+    "Piscine privée": 3038,
+    "Bâtiment commercial": 2999,
+    "Bâtiment industriel": 1124,
+    "Bâtiment municipal": 569,
+    "École": 257,
+    "Réservoir": 243,
+    "Bâtiment public": 190,
+    "Bâtiment agricole": 128,
+    "Indéfini": 105,
+    "Église": 91,
+    "Serre": 76,
+    "Piscine publique": 52,
+    "Hôpital": 31,
+    "Silo": 21
+  },
+  "share_within_m_pct": {
+    "50": {
+      "Bâtiment agricole": 0.0,
+      "Bâtiment commercial": 9.2,
+      "Bâtiment industriel": 0.27,
+      "Bâtiment municipal": 22.5,
+      "Bâtiment public": 4.21,
+      "Garage - Annexe - Remise": 0.16,
+      "Hôpital": 0.0,
+      "Indéfini": 0.95,
+      "Piscine privée": 0.07,
+      "Piscine publique": 11.54,
+      "Réservoir": 0.0,
+      "Résidence": 0.44,
+      "Serre": 0.0,
+      "Silo": 0.0,
+      "École": 3.89,
+      "Église": 7.69,
+      "all": 0.47
+    },
+    "100": {
+      "Bâtiment agricole": 0.78,
+      "Bâtiment commercial": 15.84,
+      "Bâtiment industriel": 0.44,
+      "Bâtiment municipal": 29.0,
+      "Bâtiment public": 14.74,
+      "Garage - Annexe - Remise": 0.94,
+      "Hôpital": 0.0,
+      "Indéfini": 2.86,
+      "Piscine privée": 0.39,
+      "Piscine publique": 21.15,
+      "Réservoir": 0.0,
+      "Résidence": 2.12,
+      "Serre": 0.0,
+      "Silo": 0.0,
+      "École": 13.23,
+      "Église": 26.37,
+      "all": 1.82
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "window_m": 512,
+  "box_sizes_m": [
+    4,
+    8,
+    16,
+    32,
+    64,
+    128
+  ],
+  "dilations_m": [
+    0,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64
+  ],
+  "areas": {
+    "Haute-Ville": {
+      "centre": "inside the walls (lon, lat) (-71.2075, 46.8123)",
+      "buildings": 436,
+      "built_share_pct": 40.5,
+      "boxes_touched": [
+        8379,
+        2561,
+        771,
+        224,
+        64,
+        16
+      ],
+      "box_dimension": 1.798,
+      "clusters_after_dilation": [
+        97,
+        54,
+        36,
+        6,
+        2,
+        1,
+        1
+      ]
+    },
+    "Limoilou": {
+      "centre": "median building of Vieux-Limoilou",
+      "buildings": 714,
+      "built_share_pct": 34.7,
+      "boxes_touched": [
+        8187,
+        2723,
+        932,
+        256,
+        64,
+        16
+      ],
+      "box_dimension": 1.803,
+      "clusters_after_dilation": [
+        273,
+        140,
+        42,
+        33,
+        1,
+        1,
+        1
+      ]
+    },
+    "Sainte-Foy": {
+      "centre": "median building of Plateau",
+      "buildings": 428,
+      "built_share_pct": 20.7,
+      "boxes_touched": [
+        5659,
+        2062,
+        739,
+        238,
+        61,
+        16
+      ],
+      "box_dimension": 1.692,
+      "clusters_after_dilation": [
+        426,
+        258,
+        76,
+        23,
+        4,
+        1,
+        1
+      ]
+    }
+  }
+}

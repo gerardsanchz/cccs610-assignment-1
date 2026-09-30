@@ -1,0 +1,65 @@
+{
+  "steps": [
+    {
+      "from": 0.3,
+      "to": 0.5,
+      "extra_antennas": 8.2,
+      "extra_coverage_pts": 10.58,
+      "pts_per_antenna": 1.29
+    },
+    {
+      "from": 0.5,
+      "to": 0.7,
+      "extra_antennas": 10.8,
+      "extra_coverage_pts": 8.16,
+      "pts_per_antenna": 0.756
+    },
+    {
+      "from": 0.7,
+      "to": 0.8,
+      "extra_antennas": 14.6,
+      "extra_coverage_pts": 5.0,
+      "pts_per_antenna": 0.342
+    },
+    {
+      "from": 0.8,
+      "to": 0.9,
+      "extra_antennas": 12.4,
+      "extra_coverage_pts": 2.3,
+      "pts_per_antenna": 0.185
+    },
+    {
+      "from": 0.9,
+      "to": 0.95,
+      "extra_antennas": 19.8,
+      "extra_coverage_pts": 2.09,
+      "pts_per_antenna": 0.106
+    }
+  ],
+  "best_threshold_for_price": {
+    "0.95": {
+      "from": 0.0,
+      "to": 0.1056
+    },
+    "0.9": {
+      "from": 0.1056,
+      "to": 0.1855
+    },
+    "0.8": {
+      "from": 0.1855,
+      "to": 0.3425
+    },
+    "0.7": {
+      "from": 0.3425,
+      "to": 0.7556
+    },
+    "0.5": {
+      "from": 0.7556,
+      "to": 1.2902
+    },
+    "0.3": {
+      "from": 1.2902,
+      "to": null
+    }
+  }
+}

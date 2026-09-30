@@ -1,0 +1,61 @@
+{
+  "seed": 610,
+  "basic": [
+    {
+      "scenario": "A: square 80x80, no margin (class notebook)",
+      "width": 80,
+      "height": 80,
+      "margin": 0,
+      "replicas": 20,
+      "min_area": 103,
+      "max_area": 1029.25,
+      "cv_area": 0.597,
+      "edge_share": 0.73,
+      "mean_edge_area": 459.768,
+      "mean_inner_area": 371.947,
+      "min_gap": 4.107
+    },
+    {
+      "scenario": "B: rectangle 120x54, no margin",
+      "width": 120,
+      "height": 54,
+      "margin": 0,
+      "replicas": 20,
+      "min_area": 108.2,
+      "max_area": 996.7,
+      "cv_area": 0.576,
+      "edge_share": 0.793,
+      "mean_edge_area": 472.989,
+      "mean_inner_area": 289.042,
+      "min_gap": 4.691
+    },
+    {
+      "scenario": "C: rectangle 120x54, margin 6",
+      "width": 120,
+      "height": 54,
+      "margin": 6,
+      "replicas": 20,
+      "min_area": 175.75,
+      "max_area": 965.85,
+      "cv_area": 0.488,
+      "edge_share": 0.767,
+      "mean_edge_area": 488.266,
+      "mean_inner_area": 250.721,
+      "min_gap": 6.952
+    },
+    {
+      "scenario": "D: rectangle 120x54, margin 12",
+      "width": 120,
+      "height": 54,
+      "margin": 12,
+      "replicas": 20,
+      "min_area": 208.65,
+      "max_area": 720.25,
+      "cv_area": 0.327,
+      "edge_share": 0.8,
+      "mean_edge_area": 481.069,
+      "mean_inner_area": 239.546,
+      "min_gap": 12.101
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "seed": 610,
+  "basic": {
+    "vertices": 49,
+    "edges": 105,
+    "max_degree": 7,
+    "colours": {
+      "original (class)": 5,
+      "largest_first": 5,
+      "smallest_last": 4,
+      "saturation_largest_first": 4,
+      "independent_set": 5,
+      "connected_sequential_bfs": 5,
+      "random_sequential": 5
+    },
+    "original_equals_largest_first": true
+  }
+}
