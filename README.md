@@ -1,5 +1,7 @@
 # CCCS 610, Assignment 1: code, results and figures
 
+This repository holds the code, results and figures as submitted on 2026-09-29, and it is not maintained.
+
 Code for the report "Assignment 1" of CCCS 610 (Digital Thinking and Data Analysis), McGill University, Fall 2026, sessions 1 to 4, by Sebastián Vielmas. Every number in the report comes from a file in `results/`, written by a script in `code/`, and every figure is in `figures/`.
 
 ## Scripts
