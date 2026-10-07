@@ -2,3 +2,12 @@ build/
 __pycache__/
 data/*
 !data/.gitkeep
+
+# Git worktrees for isolated branch work
+.worktrees/
+
+# Claude Code worktrees
+.claude/worktrees/
+
+# Quire review plugin's private CRDT state (comments, suggestions); not source
+.quire/
