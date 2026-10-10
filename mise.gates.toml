@@ -1,0 +1,210 @@
+# Seeded by `mise run repo-gates -- seed` in condor-ai, and owned by THIS repo from
+# here on: repo-gates writes a file only when it is absent and never rewrites one.
+# Edit this file here. To take a fresh copy of the current template, delete it and
+# re-run the seed.
+
+
+[lint-md]
+description = "rumdl Markdown lints. Args: a file list; no args = the working tree."
+tools = { "aqua:rvben/rumdl" = "0.2.78" }
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+[ $# -gt 0 ] || set -- .
+rumdl check "$@"
+'''
+
+[fmt-md-check]
+description = "rumdl Markdown formatter, check mode. Fix with `mise run fmt-md`."
+tools = { "aqua:rvben/rumdl" = "0.2.78" }
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+[ $# -gt 0 ] || set -- .
+rumdl fmt --check "$@"
+'''
+
+[fmt-md]
+description = "rumdl Markdown formatter, WRITE mode. Paths required; `--all` = whole tree."
+tools = { "aqua:rvben/rumdl" = "0.2.78" }
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+if [ $# -eq 0 ]; then
+  echo 'fmt-md writes files, so name them: mise run fmt-md -- <paths>' >&2
+  echo 'Whole tree, deliberately: mise run fmt-md -- --all' >&2
+  exit 2
+fi
+if [ "$1" = "--all" ]; then
+  shift
+  [ $# -eq 0 ] || { echo 'fmt-md: --all takes no other paths.' >&2; exit 2; }
+  set -- .
+fi
+for arg in "$@"; do
+  [ -f "$arg" ] || continue
+  case "$arg" in
+    *.md | *.markdown) continue ;;
+  esac
+  echo 'fmt-md: refusing to rewrite a file it does not own: '"$arg" >&2
+  echo 'fmt-md: rumdl fmt rewrites such a file in place and reports success.' >&2
+  exit 2
+done
+rumdl fmt "$@"
+'''
+
+[links]
+description = "lychee link check, offline (no network in the commit loop)."
+tools = { "aqua:lycheeverse/lychee" = "0.24.2" }
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+[ $# -gt 0 ] || set -- .
+lychee --offline --no-progress --cache --max-cache-age 1d "$@"
+'''
+
+[lint-yaml]
+description = "yamllint against .yamllint. Catches the duplicate key PyYAML swallows."
+tools = { "pipx:yamllint" = "1.38.0" }
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+[ $# -gt 0 ] || set -- .
+yamllint "$@"
+'''
+
+[secrets-staged]
+description = "betterleaks over the staged index. The pre-commit secrets gate."
+tools = { "aqua:betterleaks/betterleaks" = "1.9.0" }
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+# --verbose, or a failure names nothing: without it betterleaks prints
+# "leaks found: 1" and no rule, path or line, which is a gate nobody can act
+# on. This flag and not `--report-format json`, because --redact covers the
+# console log and NOT the report file.
+betterleaks git --staged --redact --verbose
+'''
+
+[secrets]
+description = "betterleaks over the whole working tree. On-demand backstop."
+tools = { "aqua:betterleaks/betterleaks" = "1.9.0" }
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+# --verbose, or a failure names nothing: without it betterleaks prints
+# "leaks found: 1" and no rule, path or line, which is a gate nobody can act
+# on. This flag and not `--report-format json`, because --redact covers the
+# console log and NOT the report file.
+# The walk reads `.betterleaks.toml` with `.betterleaks-dir.toml` appended: the
+# allowlists for gitignored trees only a filesystem walk reaches. The staged gate
+# loads the base file alone, so a file force-added there is still scanned.
+work="$(mktemp -d)"
+trap 'rm -rf "$work"' EXIT
+cat .betterleaks.toml .betterleaks-dir.toml >"$work/config.toml"
+betterleaks dir --config "$work/config.toml" --redact --verbose .
+'''
+
+[lfs-coverage]
+description = "Every staged binary is matched by a .gitattributes LFS pattern, and every LFS-routed path is staged as a pointer."
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+git rev-parse --git-dir >/dev/null 2>&1 || exit 0
+# Opt-in: a repo that declares no LFS pattern has not adopted LFS, and every binary in it
+# is a plain blob by choice. Enforcing there would fail a commit over a decision the repo
+# already made.
+grep -qs "filter=lfs" .gitattributes || exit 0
+
+uncovered=0
+while IFS="$(printf '\t')" read -r added removed path; do
+  [ -n "$path" ] || continue
+  # `-` in both numstat columns is git's own marker for a binary diff. Deletions are
+  # dropped by `--diff-filter=d` on the diff this loop reads: they also read `-`/`-`,
+  # add no blob, and removing a plain-blob binary is the cleanup this gate wants.
+  [ "$added" = "-" ] || continue
+  [ "$removed" = "-" ] || continue
+  if git -c core.quotePath=false check-attr filter -- "$path" | grep -qv ": filter: lfs$"; then
+    echo "not covered by Git LFS: $path"
+    uncovered=1
+  fi
+done <<STAGED
+$(git -c core.quotePath=false diff --cached --numstat --diff-filter=d)
+STAGED
+
+if [ "$uncovered" -ne 0 ]; then
+  echo
+  echo "Add the extension to .gitattributes and re-stage. A plain blob cannot be converted"
+  echo "to LFS afterwards without rewriting landed commits."
+  exit 1
+fi
+
+# A pattern in .gitattributes routes a path to LFS; it does not prove the filter ran. When
+# `git lfs install` never touched a clone -- or a commit bypassed the filters -- the file
+# lands as a plain blob under a pattern that claims otherwise, and nothing downstream
+# notices until `git lfs fsck` fails and every fresh worktree reports the file modified.
+# Twelve .heic did exactly that in the mi repository, for 44 MB. The staged blob is the
+# proof: an LFS-routed path holds a pointer or the filter did not run.
+mismatched=0
+while IFS= read -r path; do
+  [ -n "$path" ] || continue
+  git -c core.quotePath=false check-attr filter -- "$path" | grep -q ": filter: lfs$" || continue
+  # 42 bytes: the exact length of an LFS v1 pointer's version line.
+  header=$(git cat-file -p ":$path" 2>/dev/null | head -c 42 || true)
+  if [ "$header" != "version https://git-lfs.github.com/spec/v1" ]; then
+    echo "staged as a plain blob though .gitattributes routes it to LFS: $path"
+    mismatched=1
+  fi
+done <<ROUTED
+$(git -c core.quotePath=false diff --cached --name-only --diff-filter=ACMR)
+ROUTED
+
+if [ "$mismatched" -ne 0 ]; then
+  echo
+  echo "Run 'git lfs install' in this clone, then 'git add --renormalize <path>' and re-stage."
+  exit 1
+fi
+
+'''
+
+[conflict-markers]
+description = "Reject unresolved merge markers in Markdown. Args: a file list; no args = the tree."
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+markers='^(<<<<<<< |\|\|\|\|\|\|\| |>>>>>>> )'
+# `git grep` exits 1 for "no match", which is this gate's passing case, and 2+ for a real
+# error. The rendered prelude is `set -euo pipefail`, so `set -e` has to be lifted across
+# the call: otherwise a clean tree aborts the script at the assignment and the gate can
+# only reach its own verdict when a marker is present -- `mise run check` then fails on
+# every healthy repository. `rc=$?` also has to read the assignment rather than the
+# enclosing `if`, which always exits 0.
+set +e
+if [ $# -gt 0 ]; then
+  hits=$(git grep --cached -n -E "$markers" -- "$@")
+  rc=$?
+else
+  hits=$(git grep -n -E "$markers" -- '*.md' '*.markdown')
+  rc=$?
+fi
+set -e
+[ "$rc" -le 1 ] || exit "$rc"
+if [ "$rc" -eq 0 ]; then
+  echo "unresolved merge marker in Markdown; resolve it before committing:" >&2
+  printf '%s\n' "$hits" >&2
+  exit 1
+fi
+
+'''
+
+[check]
+description = "Every seeded gate over the whole tree. The backstop a staged-files run cannot be; the audit sweep is separate."
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+mise run lint-md
+mise run fmt-md-check
+mise run links
+mise run lint-yaml
+mise run secrets
+mise run conflict-markers
+'''

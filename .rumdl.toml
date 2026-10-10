@@ -1,0 +1,62 @@
+# Seeded by `mise run repo-gates -- seed` in condor-ai, and owned by THIS repo from
+# here on: repo-gates writes a file only when it is absent and never rewrites one.
+# Edit this file here. To take a fresh copy of the current template, delete it and
+# re-run the seed.
+#
+# A corpus this repo holds as received — imported prose, a converted archive —
+# earns an `exclude` glob below, with the measurement behind it named.
+# Withheld from the fixer, reported but never auto-repaired: MD056, MD011.
+
+[global]
+exclude = ["**/.claude/**/memory/*.md", "**/.claude/**/plans/*.md"]
+force-exclude = true
+unfixable = ["MD056", "MD011"]
+disable = [
+  "MD013",
+  "MD041",
+  "MD036",
+  "MD057",
+  "MD051",
+  "MD024",
+  "MD028",
+  "MD033",
+  "MD045",
+  "MD046",
+  "MD059",
+  "MD066",
+  "MD075",
+  "MD076",
+]
+
+[MD024]
+siblings_only = true
+
+[MD025]
+front_matter_title = ""
+
+[MD003]
+style = "atx"
+
+[MD004]
+style = "dash"
+
+[MD029]
+style = "ordered"
+
+[MD035]
+style = "---"
+
+[MD046]
+style = "fenced"
+
+[MD048]
+style = "backtick"
+
+[MD049]
+style = "asterisk"
+
+[MD050]
+style = "asterisk"
+
+[MD018]
+tags = true
