@@ -196,6 +196,21 @@ fi
 
 '''
 
+[land]
+description = "Land the task branch from its worktree (`worktree_new.py`), never by committing on main: merge the base in, open or reuse its PR, merge it."
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+lander="${XDG_CACHE_HOME:-$HOME/.cache}/condor-main-deploy/tree/mise-tasks/land.py"
+[ -f "$lander" ] || lander="$HOME/condor-ai/mise-tasks/land.py"
+if ! command -v uv >/dev/null || [ ! -f "$lander" ]; then
+  echo "land: FAILED uv or condor-ai's land.py is missing; clone condor-ai to ~/condor-ai rc=1" >&2
+  exit 1
+fi
+echo "[land] lander: $lander" >&2
+exec uv run "$lander" "$@"
+'''
+
 [check]
 description = "Every seeded gate over the whole tree. The backstop a staged-files run cannot be; the audit sweep is separate."
 run = '''
