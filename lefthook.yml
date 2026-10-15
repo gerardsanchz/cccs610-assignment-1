@@ -56,3 +56,6 @@ pre-commit:
       glob: "*.md"
       run: "mise run conflict-markers -- {staged_files}"
       fail_text: "reproduce: mise run conflict-markers"
+    tests:
+      run: "mise run tests -- --staged"
+      fail_text: "reproduce: mise run tests"
