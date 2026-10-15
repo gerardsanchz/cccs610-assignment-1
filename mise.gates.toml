@@ -211,6 +211,133 @@ echo "[land] lander: $lander" >&2
 exec uv run "$lander" "$@"
 '''
 
+[tests]
+description = "Every tracked test_*.py suite the given paths reach, one pytest run per suite under its nearest pyproject.toml. Args: a file list or --staged; no args = all."
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+# House-owned. Args: a file list, or --staged for the index; no args = all.
+# The paths to route: the index when asked, else the arguments. The index is read before the
+# scrub below: under `git commit -- <paths>` the hook's index is a temporary one named by
+# GIT_INDEX_FILE and the real index may hold none of those paths, so a listing taken after
+# the scrub saw nothing and every suite ran (mi, 45-54 s).
+paths=()
+if [ "${1:-}" = "--staged" ]; then
+  shift
+  while IFS= read -r -d '' path; do paths+=("$path"); done \
+    < <(git diff --name-only --cached --diff-filter=ACMRD -z)
+else
+  paths=("$@")
+fi
+
+# A git hook exports GIT_DIR and GIT_INDEX_FILE; a suite's `git init` in a scratch directory
+# inheriting them re-initialises the hook's own repository (core.bare = true).
+for var in $(compgen -e); do
+  case $var in GIT_*) unset "$var" ;; esac
+done
+# An activated virtualenv would become the base of the manifest-less runner below, and a
+# suite would then pass on the caller's packages and fail on the next machine.
+unset VIRTUAL_ENV
+cd "$(git rev-parse --show-toplevel)"
+
+# Every tracked suite directory, with the first path component it belongs to.
+declare -A suite_root=()
+while IFS= read -r -d '' file; do
+  case ${file##*/} in test_*.py) ;; *) continue ;; esac
+  case $file in
+    */*) dir=${file%/*}; root=${file%%/*} ;;
+    *) dir=.; root=. ;;
+  esac
+  suite_root[$dir]=$root
+  if grep -q '^# /// script' "$file"; then
+    echo "tests: $file carries a PEP 723 header the runner does not read; declare" >&2
+    echo "tests: its dependencies in the nearest pyproject.toml instead" >&2
+  fi
+done < <(git ls-files -z -- '*test_*.py')
+
+declare -A chosen=()
+all=0
+[ "${1+set}" = set ] || [ "${paths[0]+set}" = set ] || all=1
+for path in "${paths[@]}"; do
+  path=${path%/}
+  if [ -d "$path" ] || [[ $path == */* ]]; then
+    root=${path%%/*}
+  elif [[ $path == *.md ]]; then
+    continue
+  else
+    all=1
+    break
+  fi
+  for dir in "${!suite_root[@]}"; do
+    [ "${suite_root[$dir]}" = "$root" ] && chosen[$dir]=1
+  done
+done
+if [ "$all" -eq 1 ]; then
+  for dir in "${!suite_root[@]}"; do chosen[$dir]=1; done
+fi
+
+count=0
+for dir in "${!chosen[@]}"; do count=$((count + 1)); done
+if [ "$count" -eq 0 ]; then
+  echo "tests: no suite reached by the given paths; nothing to run" >&2
+  exit 0
+fi
+mapfile -t suites < <(printf '%s\n' "${!chosen[@]}" | sort)
+echo "tests: suites: ${suites[*]}" >&2
+
+status=0
+for dir in "${suites[@]}"; do
+  # The nearest pyproject.toml at or above the suite owns its environment and options.
+  project=""
+  probe=$dir
+  while :; do
+    if [ -f "$probe/pyproject.toml" ]; then project=$probe; break; fi
+    [ "$probe" = . ] && break
+    case $probe in */*) probe=${probe%/*} ;; *) probe=. ;; esac
+  done
+  if [ -n "$project" ]; then
+    rel=${dir#"$project"/}
+    [ "$rel" != "$dir" ] || [ "$project" = . ] || rel=.
+    [ "$dir" != "$project" ] || rel=.
+    runner=(uv run --project . pytest -q -p no:cacheprovider)
+    # Every --deselect in the project's addopts must still name a collected test: pytest
+    # ignores an unknown id silently, so a stale line would deselect nothing and say so to
+    # nobody (mi's baseline check, carried here). Comment lines are skipped, and an id is
+    # held only to the suite it names, since one project may hold several suites.
+    mapfile -t deselected < <(grep -v '^[[:space:]]*#' "$project/pyproject.toml" \
+      | grep -oE -- '--deselect[= ]+[^"'"'"' ]+' | sed -E 's/^--deselect[= ]+//')
+    collected=""
+    probed=0
+    for id in "${deselected[@]}"; do
+      case $rel in .) ;; *) case $id in "$rel"/*) ;; *) continue ;; esac ;; esac
+      if [ "$probed" -eq 0 ]; then
+        probed=1
+        # A collection that fails (an import error, a missing runner) leaves no ids, so every
+        # deselect would read as stale and the cause would be lost: name the failure instead.
+        collect_status=0
+        collected=$(cd "$project" \
+          && "${runner[@]}" --collect-only -o addopts= "$rel" 2>&1) || collect_status=$?
+        # Exit 5 is pytest's "no tests collected": not a failure, so the ids are checked as usual.
+        if [ "$collect_status" -ne 0 ] && [ "$collect_status" -ne 5 ]; then
+          echo "tests: $project collection of $rel failed (exit $collect_status):" >&2
+          tail -n 20 <<<"$collected" >&2
+          status=1
+          break
+        fi
+      fi
+      if ! grep -qxF -- "$id" <<<"$collected"; then
+        echo "tests: $project/pyproject.toml deselects $id, which $rel does not collect" >&2
+        status=1
+      fi
+    done
+    (cd "$project" && "${runner[@]}" "$rel") || status=1
+  else
+    uv run --no-project --with pytest pytest -q -p no:cacheprovider "$dir" || status=1
+  fi
+done
+exit "$status"
+'''
+
 [check]
 description = "Every seeded gate over the whole tree. The backstop a staged-files run cannot be; the audit sweep is separate."
 run = '''
@@ -222,4 +349,5 @@ mise run links
 mise run lint-yaml
 mise run secrets
 mise run conflict-markers
+mise run tests
 '''
