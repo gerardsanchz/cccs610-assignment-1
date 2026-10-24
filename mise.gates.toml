@@ -240,8 +240,9 @@ done
 unset VIRTUAL_ENV
 cd "$(git rev-parse --show-toplevel)"
 
-# Every tracked suite directory, with the first path component it belongs to.
+# Every tracked test file, with its suite directory and the first path component it belongs to.
 declare -A suite_root=()
+test_files=()
 while IFS= read -r -d '' file; do
   case ${file##*/} in test_*.py) ;; *) continue ;; esac
   case $file in
@@ -249,31 +250,79 @@ while IFS= read -r -d '' file; do
     *) dir=.; root=. ;;
   esac
   suite_root[$dir]=$root
+  test_files+=("$file")
   if grep -q '^# /// script' "$file"; then
     echo "tests: $file carries a PEP 723 header the runner does not read; declare" >&2
     echo "tests: its dependencies in the nearest pyproject.toml instead" >&2
   fi
 done < <(git ls-files -z -- '*test_*.py')
 
+# What each chosen suite runs: "*" for every test in it, else the newline-joined test files
+# the given paths reached. A commit runs the tests its paths reach; `mise run tests` with no
+# arguments, and `check`, run them all.
 declare -A chosen=()
+reach_file() {
+  local dir=.
+  case $1 in */*) dir=${1%/*} ;; esac
+  case ${chosen[$dir]-} in
+    '*' | *$'\n'"$1" | *$'\n'"$1"$'\n'*) ;;
+    *) chosen[$dir]="${chosen[$dir]-}"$'\n'"$1" ;;
+  esac
+}
+reach_suites_under() {
+  local dir
+  for dir in "${!suite_root[@]}"; do
+    if [ "$1" = . ] || [ "$dir" = "$1" ] || [[ $dir == "$1"/* ]]; then chosen[$dir]='*'; fi
+  done
+}
+root_of() {
+  case $1 in */*) printf '%s' "${1%%/*}" ;; *) printf '.' ;; esac
+}
+# Run one suite's pytest, its output on the terminal and kept. pytest exits 5 when it ran
+# nothing. Where its summary counts deselected tests, the project's own markers left every
+# reached test out (a slow suite its addopts excludes from each commit): the gate says so
+# and passes. Any other exit 5 is a reached test file that holds no test, and fails.
+run_suite() {
+  local log run_status=0
+  log=$(mktemp)
+  "$@" | tee "$log" || run_status=${PIPESTATUS[0]}
+  if [ "$run_status" -eq 5 ] && grep -qE '^[0-9]+ deselected' "$log"; then
+    echo "tests: $dir: the project's markers deselect every reached test; nothing ran" >&2
+    run_status=0
+  fi
+  rm -f "$log"
+  [ "$run_status" -eq 0 ]
+}
+
 all=0
 [ "${1+set}" = set ] || [ "${paths[0]+set}" = set ] || all=1
 for path in "${paths[@]}"; do
   path=${path%/}
-  if [ -d "$path" ] || [[ $path == */* ]]; then
-    root=${path%%/*}
-  elif [[ $path == *.md ]]; then
+  name=${path##*/}
+  base=.
+  case $path in */*) base=${path%/*} ;; esac
+  if [ -d "$path" ]; then
+    reach_suites_under "$path"
     continue
-  else
-    all=1
-    break
   fi
-  for dir in "${!suite_root[@]}"; do
-    [ "${suite_root[$dir]}" = "$root" ] && chosen[$dir]=1
-  done
+  case $name in
+    test_*.py)
+      [ -f "$path" ] && reach_file "$path"
+      ;;
+    conftest.py)
+      reach_suites_under "$base"
+      ;;
+    *.py)
+      mine=$(root_of "$path")
+      for file in "${test_files[@]}"; do
+        [ "${file##*/}" = "test_${name%.py}.py" ] || continue
+        [ "$(root_of "$file")" = "$mine" ] && reach_file "$file"
+      done
+      ;;
+  esac
 done
 if [ "$all" -eq 1 ]; then
-  for dir in "${!suite_root[@]}"; do chosen[$dir]=1; done
+  for dir in "${!suite_root[@]}"; do chosen[$dir]='*'; done
 fi
 
 count=0
@@ -287,6 +336,14 @@ echo "tests: suites: ${suites[*]}" >&2
 
 status=0
 for dir in "${suites[@]}"; do
+  # The test files the paths reached in this suite, or the whole suite directory.
+  if [ "${chosen[$dir]}" = '*' ]; then
+    reached=("$dir")
+    echo "tests: $dir: every test" >&2
+  else
+    mapfile -t reached <<<"${chosen[$dir]#$'\n'}"
+    echo "tests: $dir: ${reached[*]##*/}" >&2
+  fi
   # The nearest pyproject.toml at or above the suite owns its environment and options.
   project=""
   probe=$dir
@@ -330,9 +387,16 @@ for dir in "${suites[@]}"; do
         status=1
       fi
     done
-    (cd "$project" && "${runner[@]}" "$rel") || status=1
+    if [ "${chosen[$dir]}" = '*' ]; then
+      targets=("$rel")
+    else
+      targets=()
+      for file in "${reached[@]}"; do targets+=("${file#"$project"/}"); done
+    fi
+    (cd "$project" && run_suite "${runner[@]}" "${targets[@]}") || status=1
   else
-    uv run --no-project --with pytest pytest -q -p no:cacheprovider "$dir" || status=1
+    run_suite uv run --no-project --with pytest pytest -q -p no:cacheprovider "${reached[@]}" \
+      || status=1
   fi
 done
 exit "$status"
