@@ -197,7 +197,7 @@ fi
 '''
 
 [land]
-description = "Land the task branch from its worktree (`worktree_new.py`), never by committing on main: merge the base in, open or reuse its PR, merge it."
+description = "Land the task branch from its worktree (`worktree_new.py`), never by committing on main: merge the base in, open or reuse its PR, merge it, or with `--review` open it for review and merge nothing."
 run = '''
 #!/usr/bin/env bash
 set -euo pipefail
